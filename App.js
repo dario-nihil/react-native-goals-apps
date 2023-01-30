@@ -5,7 +5,7 @@ import {
   Text,
   TextInput,
   View,
-  ScrollView,
+  FlatList,
 } from "react-native";
 
 const App = () => {
@@ -17,7 +17,10 @@ const App = () => {
   };
 
   const addGoalHandler = () => {
-    setCourseGoals((prevState) => [...prevState, enteredGoalText]);
+    setCourseGoals((prevState) => [
+      ...prevState,
+      { text: enteredGoalText, id: Math.random().toString() },
+    ]);
     console.log(enteredGoalText);
   };
 
@@ -32,14 +35,18 @@ const App = () => {
         <Button title="Add goal" onPress={addGoalHandler} />
       </View>
       <View style={styles.goalsContainer}>
-        <ScrollView>
-          {courseGoals.map((courseGoal) => (
-            // inserted a wrapper View element because of styles differences between IOS and Adroid to apply borderRadius
-            <View key={courseGoal} style={styles.goalItem}>
-              <Text style={styles.goalText}>{courseGoal}</Text>
-            </View>
-          ))}
-        </ScrollView>
+        <FlatList
+          data={courseGoals}
+          keyExtractor={(item, _) => item.id}
+          renderItem={(dataItem) => {
+            return (
+              // inserted a wrapper View element because of styles differences between IOS and Adroid to apply borderRadius
+              <View style={styles.goalItem}>
+                <Text style={styles.goalText}>{dataItem.item.text}</Text>
+              </View>
+            );
+          }}
+        ></FlatList>
       </View>
     </View>
   );
