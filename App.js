@@ -3,12 +3,14 @@ import { Button, StyleSheet, Text, TextInput, View } from "react-native";
 
 const App = () => {
   const [enteredGoalText, setEnteredGoalText] = useState("");
+  const [courseGoals, setCourseGoals] = useState([]);
 
   const goalInputHandler = (enteredText) => {
     setEnteredGoalText(enteredText);
   };
 
   const addGoalHandler = () => {
+    setCourseGoals((prevState) => [...prevState, enteredGoalText]);
     console.log(enteredGoalText);
   };
 
@@ -23,7 +25,12 @@ const App = () => {
         <Button title="Add goal" onPress={addGoalHandler} />
       </View>
       <View style={styles.goalsContainer}>
-        <Text>List of goals...</Text>
+        {courseGoals.map((courseGoal) => (
+          // inserted a wrapper View element because of styles differences between IOS and Adroid to apply borderRadius
+          <View key={courseGoal} style={styles.goalItem}>
+            <Text style={styles.goalText}>{courseGoal}</Text>
+          </View>
+        ))}
       </View>
     </View>
   );
@@ -53,6 +60,15 @@ const styles = StyleSheet.create({
   },
   goalsContainer: {
     flex: 5,
+  },
+  goalItem: {
+    margin: 8,
+    padding: 8,
+    borderRadius: 6,
+    backgroundColor: "#5e0acc",
+  },
+  goalText: {
+    color: "#ffffff",
   },
 });
 
