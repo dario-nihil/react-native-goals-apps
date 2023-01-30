@@ -1,12 +1,7 @@
 import { useState } from "react";
-import {
-  Button,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  FlatList,
-} from "react-native";
+import { Button, StyleSheet, TextInput, View, FlatList } from "react-native";
+
+import GoalItem from "./components/GoalItem";
 
 const App = () => {
   const [enteredGoalText, setEnteredGoalText] = useState("");
@@ -38,14 +33,7 @@ const App = () => {
         <FlatList
           data={courseGoals}
           keyExtractor={(item, _) => item.id}
-          renderItem={(dataItem) => {
-            return (
-              // inserted a wrapper View element because of styles differences between IOS and Adroid to apply borderRadius
-              <View style={styles.goalItem}>
-                <Text style={styles.goalText}>{dataItem.item.text}</Text>
-              </View>
-            );
-          }}
+          renderItem={(dataItem) => <GoalItem dataItem={dataItem} />}
         ></FlatList>
       </View>
     </View>
@@ -76,15 +64,6 @@ const styles = StyleSheet.create({
   },
   goalsContainer: {
     flex: 5,
-  },
-  goalItem: {
-    margin: 8,
-    padding: 8,
-    borderRadius: 6,
-    backgroundColor: "#5e0acc",
-  },
-  goalText: {
-    color: "#ffffff",
   },
 });
 
