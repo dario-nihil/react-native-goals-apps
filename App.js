@@ -12,7 +12,10 @@ const App = () => {
       ...prevState,
       { text: enteredGoalText, id: Math.random().toString() },
     ]);
-    console.log(enteredGoalText);
+  };
+
+  const deleteGoalHandler = (id) => {
+    setCourseGoals((prevState) => prevState.filter((goal) => goal.id !== id));
   };
 
   return (
@@ -22,7 +25,9 @@ const App = () => {
         <FlatList
           data={courseGoals}
           keyExtractor={(item, _) => item.id}
-          renderItem={(dataItem) => <GoalItem dataItem={dataItem} />}
+          renderItem={(dataItem) => (
+            <GoalItem dataItem={dataItem} onDeleteGoal={deleteGoalHandler} />
+          )}
         ></FlatList>
       </View>
     </View>

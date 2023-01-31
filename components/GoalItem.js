@@ -1,11 +1,14 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View, Text, Pressable } from "react-native";
 
-const GoalItem = ({ dataItem: { item } }) => {
+const GoalItem = ({ dataItem, onDeleteGoal }) => {
+  const { item } = dataItem;
+
   return (
-    // inserted a wrapper View element because of styles differences between IOS and Adroid to apply borderRadius
-    <View style={styles.goalItem}>
-      <Text style={styles.goalText}>{item.text}</Text>
-    </View>
+    <Pressable onPress={onDeleteGoal.bind(this, item.id)}>
+      <View style={styles.goalItem}>
+        <Text style={styles.goalText}>{item.text}</Text>
+      </View>
+    </Pressable>
   );
 };
 
